@@ -1,0 +1,132 @@
+VOYAGEUR DE COMMERCE :
+______________________________
+
+
+
+VARIABLES DE DECISIONS :
+
+Xi = 1 si on choisit la tournée i
+	 0 sinon
+
+param Li : la longueur de la plus courte tournée visitant chaque point de pompage du regroupement i.	 
+--> matrice
+
+
+
+FONCTION OBJECTIF :
+
+sum i = 1 à n ( Li.Xi )		avec n le nombre de tournée possible
+
+
+
+CONTRAINTES :
+
+sum i = 1 à k ( Xi = 1 ) 	avec k le nombre d'occurence de i dans nos tournée possible
+--> cette contrainte signifie que l'on passe une seule et unique fois par un point de ponpage (entrée et sortie comprise)
+
+
+
+
+
+
+
+
+
+
+
+_________________________________________________________________________
+					CORRECTION TP 3 GLPK SOUS C++
+_________________________________________________________________________
+
+
+
+
+===============================================
+                 data.txt
+===============================================
+6
+13 24 31 19 40 29
+18 25 30 15 43 22
+20 20 27 25 34 33
+23 26 28 18 37 30
+28 33 34 17 38 20
+19 36 25 27 45 24
+
+===============================================
+                   TP3.c
+===============================================
+
+typedef struct {
+        int nbPM;     // Nombre de personnes/machines
+        int nbcontr;  // Nombre de contraintes
+        int nbvar;    // Nombre de variables
+        int **prod;   // Productivités
+
+} donnees;
+
+
+void lecture_data(char *file, donnees *p)
+{
+
+        FILE *fin; // Pointeur sur un fichier
+        int i,j;
+        int val;
+
+        fin = fopen(file,"r"); // Ouverture du fichier en lecture
+
+        /* Première ligne du fichier, on lit le nombre de personnes/machines */
+
+        fscanf(fin,"%d",&val);
+        p->nbPM = val;
+
+        // Nombre de contraintes
+        p->nbcontr = 2 * p->nbPM;
+
+        // Nombre de variables
+        p->nbvar = p->nbPM * p->nbPM;
+
+        /* Cela nous permet également de dimensionner le tableau des 
+productivités */
+        /* Les indices commencent à 1 */
+        p->prod = (int **) malloc((1 + p->nbPM) * sizeof(int*));
+        for(i = 1;i <= p->nbPM;i++)
+                p->prod[i] = (int *) malloc((1 + p->nbPM) * sizeof(int));
+
+        /* Lecture des productivités */
+        for(i = 1; i <= p->nbPM; i++)
+                for(j = 1; j <= p->nbPM; j++) {
+                        fscanf(fin,"%d",&val);
+                    p->prod[i][j] = val;
+                }
+
+        fclose(fin); // Fermeture du fichier
+}
+
+
+
+         nbcreux = 2 * p.nbPM * p.nbPM;
+
+        ia = (int *) malloc ((1 + nbcreux) * sizeof(int));
+        ja = (int *) malloc ((1 + nbcreux) * sizeof(int));
+        ar = (double *) malloc ((1 + nbcreux) * sizeof(double));
+
+        /* Série 1 de contraintes */
+        pos = 1;
+        for(i = 1; i <= p.nbPM; i++)
+                for(j = 1; j <= p.nbPM; j++)
+                {
+                        ia[pos] = i;
+                        ja[pos] = (i-1)*p.nbPM + j;
+                        ar[pos] = 1.0;
+                        pos++;
+                }
+
+        /* Série 2 de contraintes */
+        for(i = 1; i <= p.nbPM; i++)
+                for(j = 1; j <= p.nbPM; j++)
+                {
+                        ia[pos] = i + p.nbPM;
+                        ja[pos] = i + p.nbPM * (j-1);
+                        ar[pos] = 1.0;
+                        pos++;
+                }
