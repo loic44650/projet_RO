@@ -5,7 +5,7 @@ using namespace std;
 
 
 /*********************************************************************/
-//                  Fonction && Procédures
+/*                 Fonctions de tries d'ensembles                    */
 /*********************************************************************/
 
 
@@ -26,19 +26,19 @@ void affiche(vector<vector<int>> storage)
 }
 
 
-vector<vector<int>> ensembleDesParties(vector<int> lieu)
+vector<vector<int>> ensembleDesParties(donnees *p)
 {
     vector<vector<int>> subset;
     vector<int> empty;
 
     subset.push_back(empty);
 
-    for (int i = 0; i < lieu.size(); ++i)
+    for (int i = 0; i < p -> lieu.size(); ++i)
     {
         vector<vector<int>> subsetTemp = subset;
 
         for (int j = 0; j < subsetTemp.size(); ++j)    
-            subsetTemp[j].push_back(lieu[i]);
+            subsetTemp[j].push_back(p -> lieu[i]);
 
         for (int j = 0; j < subsetTemp.size(); ++j)
                 subset.push_back(subsetTemp[j]);
@@ -50,7 +50,7 @@ vector<vector<int>> ensembleDesParties(vector<int> lieu)
 }
 
 
-vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement,vector<int> capacite, int capaciteDrone)
+vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement, donnees *p)
 {
     vector<vector<int>> subset;
 
@@ -61,9 +61,9 @@ vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement
         cap = 0;
         
         for (int j = 0; j < regroupement[i].size(); ++j)
-            cap +=  capacite[regroupement[i][j] - 1];
+            cap +=  p -> capacite[regroupement[i][j] - 1];
 
-        if (cap <= capaciteDrone)
+        if (cap <= p -> capaciteDrone)
             subset.push_back(regroupement[i]);
     }
 
@@ -71,7 +71,7 @@ vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement
 }
 
 
-vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement)
+vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, *p)
 {
     vector<vector<int>> subset;
 

@@ -3,6 +3,8 @@
 #include <cassert>
 #include <cmath>
 #include <algorithm>
+#include <string>
+#include <fstream>
 
 #include <glpk.h> /* Nous allons utiliser la bibliothèque de fonctions de GLPK */
 
@@ -10,9 +12,23 @@
 #include <sys/time.h>
 #include <sys/resource.h> /* Bibliothèques utilisées pour mesurer le temps CPU */
 
-#include "fonctions_tries_ensembles.hpp"
 
 using namespace std;
+
+
+/* Structure contenant les données du problème */
+
+struct donnees
+{
+    vector<int> lieu;                   /* Nombre de lieux (incluant le dépôt) */
+    int capaciteDrone;                  /* Capacité du véhicule de livraison */
+    vector<int> capacite;               /* Demande de chaque lieu (la case 0 est inutilisée car le dépôt n'a aucune demande à voir satisfaire) */
+    vector<vector<int>> distancier;     /* distancier (les lignes et colonnes 0 correspondent au dépôt) */
+};
+
+
+#include "fonction_lecture.hpp"
+#include "fonctions_tries_ensembles.hpp"
 
 
 /* structures et fonctions de mesure du temps CPU */
@@ -43,85 +59,9 @@ double crono_ms()
 
 
 
-/* Structure contenant les données du problème */
-
-typedef struct {
-    vector<int> lieu;                   /* Nombre de lieux (incluant le dépôt) */
-    int capaciteDrone;                  /* Capacité du véhicule de livraison */
-    vector<int> capacite;               /* Demande de chaque lieu (la case 0 est inutilisée car le dépôt n'a aucune demande à voir satisfaire) */
-    vector<vector<int>> distancier;     /* distancier (les lignes et colonnes 0 correspondent au dépôt) */
-} donnees;
-
-
-
-/* lecture des donnees */
-
-void lecture_data(char *file, donnees *p)
-{
-    FILE *fin;
-    
-    int val;
-    fin = fopen(file, "rt");
-    
-    /* Lecture du nombre de villes */
-
-    int nblieux;  
-
-    fscanf(fin, "%d", &val);
-    nblieux = val;
-
-    for (int k = 1; k <= nblieux; ++k)
-    {
-        p->lieu.push_back(k);
-    }
-
-    cout << "1" << endl;
-
-    /* Lecture de la capacité */
-    
-    fscanf(fin, "%d", &val);
-    p->capaciteDrone = val;
-    
-    /* Lecture des demandes des clients */
-    
-    for(int i = 1; i < nblieux; ++i)
-    {
-        fscanf(fin, "%d", &val);
-        p->capacite.push_back(val);
-    }
- 
-     cout << "2" << endl;
-    p->distancier.resize(nblieux);
-    for (int i = 0; i < nblieux; i++)
-        p->distancier[i].resize(nblieux);
-    /* Lecture du distancier */
-    
-    for(int i = 0; i < nblieux; ++i)
-    {    
-        for(int j = 0; j < nblieux; ++j)
-        {
-            cout << "bob" << endl;
-            fscanf(fin, "%d", &val);
-            cout << val;
-         
-            p->distancier[i][j] = val;
-//          
-
-        }
-    }
-
-    cout << "3" << endl;
-
-
-    fclose(fin);
-}
-
-
-
 /*********************************************************************/
 //                              Main
 /*********************************************************************/
-
 
 int main(int argc, char *argv[])
 {
@@ -133,7 +73,11 @@ int main(int argc, char *argv[])
         
     /* Chargement des données à partir d'un fichier */
     
-    lecture_data(argv[1],&p);
+    lecture_data(argv[1], &p);
+    
+    /* On vérifie que l'on a bien une capacitée pour chaque point de pompage */
+
+    assert(p.capacite.size() == p.lieu.size());    
     
     /* Lancement de la résolution... */
 
@@ -141,42 +85,25 @@ int main(int argc, char *argv[])
 
     /* .... */
 
+    /* Déclaration des variables necéssaires au calcul des tournées possibles */
+
+    vector<vector<int>> regroupement;
+    vector<vector<int>> regroupementPossible;
+    vector<vector<int>> regroupementPermutesPossible;
 
 
-
-
-
-
-    // ptite verif a rajouter ??? lecture des données depuis un fichier
-    //assert(p.capacite.size() == p.lieu.size());
-
-
-    // vector<vector<int>> regroupement;
-    // vector<vector<int>> regroupementPossible;
-    // vector<vector<int>> regroupementPermutesPossible;
-
-
-    // regroupement = ensembleDesParties(lieu);
+    regroupement = ensembleDesParties(&p);
     // cout << "Tout les regroupements : " << endl;
     // affiche(regroupement);
     // cout << endl;
-
-
-    // regroupementPossible = ensembleDesPartiesPossibles(regroupement, capacite, capaciteDrone);
+    regroupementPossible = ensembleDesPartiesPossibles(regroupement, &p);
     // cout << "Tout les regroupements possibles : " << endl;
     // affiche(regroupementPossible);
     // cout << endl;
-
-
-    // regroupementPermutesPossible = ensembleDesPermutationsPossibles(regroupementPossible);
+    regroupementPermutesPossible = ensembleDesPermutationsPossibles(regroupementPossible, &p);
     // cout << "Tout les regroupements permutes possibles : " << endl;
     // affiche(regroupementPermutesPossible);
     // cout << endl;
-
-
-
-
-
 
 
 
@@ -194,8 +121,5 @@ int main(int argc, char *argv[])
     
     printf("Temps : %f\n",temps);   
     
-
-
-
     return 0;
 }
