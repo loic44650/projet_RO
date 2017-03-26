@@ -71,7 +71,7 @@ vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement
 }
 
 
-vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, *p)
+vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, donnees *p)
 {
     vector<vector<int>> subset;
 

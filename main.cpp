@@ -27,8 +27,8 @@ struct donnees
 };
 
 
-#include "fonction_lecture.hpp"
-#include "fonctions_tries_ensembles.hpp"
+#include "fonction_lecture.cpp"
+#include "fonctions_tries_ensembles.cpp"
 
 
 /* structures et fonctions de mesure du temps CPU */
@@ -93,17 +93,17 @@ int main(int argc, char *argv[])
 
 
     regroupement = ensembleDesParties(&p);
-    // cout << "Tout les regroupements : " << endl;
-    // affiche(regroupement);
-    // cout << endl;
+    cout << "Tout les regroupements : " << endl;
+    affiche(regroupement);
+    cout << endl;
     regroupementPossible = ensembleDesPartiesPossibles(regroupement, &p);
-    // cout << "Tout les regroupements possibles : " << endl;
-    // affiche(regroupementPossible);
-    // cout << endl;
+    cout << "Tout les regroupements possibles : " << endl;
+    affiche(regroupementPossible);
+    cout << endl;
     regroupementPermutesPossible = ensembleDesPermutationsPossibles(regroupementPossible, &p);
-    // cout << "Tout les regroupements permutes possibles : " << endl;
-    // affiche(regroupementPermutesPossible);
-    // cout << endl;
+    cout << "Tout les regroupements permutes possibles : " << endl;
+    affiche(regroupementPermutesPossible);
+    cout << endl;
 
 
 
