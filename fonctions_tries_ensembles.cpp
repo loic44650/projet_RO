@@ -41,7 +41,7 @@ vector<vector<int>> ensembleDesParties(donnees *p)
             subsetTemp[j].push_back(p -> lieu[i]);
 
         for (int j = 0; j < subsetTemp.size(); ++j)
-                subset.push_back(subsetTemp[j]);
+            subset.push_back(subsetTemp[j]);
     }
 
     subset.erase(subset.begin());
