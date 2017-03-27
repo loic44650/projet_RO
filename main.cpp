@@ -2,6 +2,7 @@
 #include <vector>
 #include <cassert>
 #include <cmath>
+#include <climits>
 #include <algorithm>
 #include <string>
 #include <fstream>
@@ -83,29 +84,32 @@ int main(int argc, char *argv[])
 
     crono_start(); // .. et donc du chronomètre
 
+
+
     /* .... */
+
+
 
     /* Déclaration des variables necéssaires au calcul des tournées possibles */
 
-    vector<vector<int>> regroupement;
-    vector<vector<int>> regroupementPossible;
-    vector<vector<int>> regroupementPermutesPossible;
+    vector<vector<int>> tournees;
 
-
-    regroupement = ensembleDesParties(&p);
+    tournees = ensembleDesParties(&p);
     //cout << "Tout les regroupements : " << endl;
-    //affiche(regroupement);
+    //affiche(tournees);
     //cout << endl;
-    regroupementPossible = ensembleDesPartiesPossibles(regroupement, &p);
+    tournees = ensembleDesPartiesPossibles(tournees, &p);
     //cout << "Tout les regroupements possibles : " << endl;
-    //affiche(regroupementPossible);
+    //affiche(tournees);
     //cout << endl;
-    regroupementPermutesPossible = ensembleDesPermutationsPossibles(regroupementPossible, &p);
-    cout << "Tout les regroupements permutes possibles : " << endl;
-    regroupementPermutesPossible.sort();
-    affiche(regroupementPermutesPossible);
+    tournees = ensembleDesPermutationsPossibles(tournees, &p);
+    //cout << "Tout les regroupements permutes possibles : " << endl;
+    //affiche(tournees);
+    //cout << endl;
+    tournees = permutationLesPlusPetites(tournees, &p);
+    cout << "Les plus courtes tournées : " << endl;
+    affiche(tournees);
     cout << endl;
-
 
 
 
