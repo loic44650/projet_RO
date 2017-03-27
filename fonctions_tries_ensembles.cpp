@@ -74,35 +74,46 @@ vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement
 vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, donnees *p)
 {
     vector<vector<int>> subset;
-
+    vector<int> levecapush;
     for (int i = 0; i < regroupement.size(); ++i)
     {
-        vector<int> vectmp;
-        vector<int> levecapush;
-
-        int c = 0;
-        int smin = 0;
         do {
-            int s = 0;
-            for (int j = 0; j < regroupement[i].size(); ++j)
-            {
-                s+= p->distancier[j][j+1];
-            }
-            if (c=0){
-              smin = s;  
-              levecapush = regroupement[i];
-            } 
-            else if (s < smin )
-            {
-                smin = s;
-                levecapush = regroupement[i];  
-            }
-            ++c;
+            subset.push_back(regroupement[i]);
         } while(next_permutation(regroupement[i].begin(),regroupement[i].end()));
-
-        subset.push_back(levecapush);
+        vector<int> v; v.push_back(-10);
+        subset.push_back(v);
     }
     return subset;  
 }
+
+vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> allpermut, donnees *p)
+{
+    vector<vector<int>> subset;
+    int c = 0;
+    while(c < allpermut.size())
+    {
+        int s = 0;
+        cout << "allpermut[c][0] " << allpermut[c][0] << endl;
+        int t = -10;
+        if( allpermut[c][0] != t )
+        {
+            cout << "if ";
+            for (int i = 0; i < allpermut[c].size(); ++i)
+            {
+                s += p->distancier[0][allpermut[c][i]];
+            }
+            int last_elt = allpermut[c][allpermut[c].size()];
+            s += p->distancier[0][last_elt];
+
+            cout << "s = " << s << endl;
+            
+        }
+
+        cout << c << endl;   
+        ++c;
+    }
+    return subset;
+}
+
 
 #endif
