@@ -1,5 +1,6 @@
 #ifndef FONCTION_TRIES_ENSEMBLES
 #define FONCTION_TRIES_ENSEMBLES
+#include "climits"
 
 using namespace std;
 
@@ -90,26 +91,37 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> allpermut, don
 {
     vector<vector<int>> subset;
     int c = 0;
+    vector<int> tmp;
+    int smin = INT_MAX;
+
     while(c < allpermut.size())
     {
         int s = 0;
-        cout << "allpermut[c][0] " << allpermut[c][0] << endl;
         int t = -10;
+        smin = INT_MAX;
+        
+
         if( allpermut[c][0] != t )
         {
-            cout << "if ";
-            for (int i = 0; i < allpermut[c].size(); ++i)
+            s += p->distancier[0][allpermut[c][0]];
+            for (int i = 0; i < allpermut[c].size()-1; ++i)
             {
-                s += p->distancier[0][allpermut[c][i]];
+                s += p->distancier[allpermut[c][i]][allpermut[c][i+1]];
             }
-            int last_elt = allpermut[c][allpermut[c].size()];
-            s += p->distancier[0][last_elt];
-
-            cout << "s = " << s << endl;
-            
+            s += p->distancier[allpermut[c].back()][0];
+            if(s < smin)
+            {
+                tmp = allpermut[c];
+                smin = s;
+            }
+            //cout << "s = " << s << endl;
         }
-
-        cout << c << endl;   
+        else
+        {
+            subset.push_back(tmp);
+            cout << "s = " << s << endl;
+            tmp.clear();
+        }
         ++c;
     }
     return subset;

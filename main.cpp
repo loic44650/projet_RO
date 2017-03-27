@@ -106,6 +106,8 @@ int main(int argc, char *argv[])
     cout << endl;
 
     vector<vector<int>> pluspetit = permutationLesPlusPetites(regroupementPermutesPossible, &p);
+    affiche(pluspetit);
+    cout << endl;
 
 
 
