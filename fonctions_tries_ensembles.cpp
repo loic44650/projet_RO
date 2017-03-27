@@ -77,11 +77,31 @@ vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroup
 
     for (int i = 0; i < regroupement.size(); ++i)
     {
+        vector<int> vectmp;
+        vector<int> levecapush;
+
+        int c = 0;
+        int smin = 0;
         do {
-           subset.push_back(regroupement[i]);
+            int s = 0;
+            for (int j = 0; j < regroupement[i].size(); ++j)
+            {
+                s+= p->distancier[j][j+1];
+            }
+            if (c=0){
+              smin = s;  
+              levecapush = regroupement[i];
+            } 
+            else if (s < smin )
+            {
+                smin = s;
+                levecapush = regroupement[i];  
+            }
+            ++c;
         } while(next_permutation(regroupement[i].begin(),regroupement[i].end()));
+
+        subset.push_back(levecapush);
     }
-    
     return subset;  
 }
 
