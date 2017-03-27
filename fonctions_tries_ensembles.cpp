@@ -98,7 +98,7 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> allpermut, don
     {
         int s = 0;
         int t = -10;
-        smin = INT_MAX;
+        //smin = INT_MAX;
         
 
         if( allpermut[c][0] != t )
@@ -113,6 +113,7 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> allpermut, don
             {
                 tmp = allpermut[c];
                 smin = s;
+                cout << "smin " << smin << endl;
             }
             //cout << "s = " << s << endl;
         }
@@ -121,6 +122,7 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> allpermut, don
             subset.push_back(tmp);
             cout << "s = " << s << endl;
             tmp.clear();
+            smin = INT_MAX;
         }
         ++c;
     }
