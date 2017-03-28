@@ -7,6 +7,8 @@
 #include <string>
 #include <fstream>
 
+#include <cstdio>
+#include <cstdlib>
 #include <glpk.h> /* Nous allons utiliser la bibliothèque de fonctions de GLPK */
 
 #include <time.h>
@@ -94,7 +96,8 @@ int main(int argc, char *argv[])
     /* Déclaration des variables necéssaires au calcul des tournées possibles */
 
     vector<vector<int>> tournees;
-
+	vector<int> longueurTournee;
+    
     tournees = ensembleDesParties(&p);
     //cout << "Tout les regroupements : " << endl;
     //affiche(tournees);
@@ -107,13 +110,15 @@ int main(int argc, char *argv[])
     //cout << "Tout les regroupements permutes possibles : " << endl;
     //affiche(tournees);
     //cout << endl;
-    tournees = permutationLesPlusPetites(tournees, &p);
+    tournees = permutationLesPlusPetites(tournees, longueurTournee, &p);
     //cout << "Les plus courtes tournées : " << endl;
     //affiche(tournees);
     //cout << endl;
 
 
-    resolutionGLPK(tournees, &p);
+    resolutionGLPK(tournees, longueurTournee, &p);
+
+
 
 
     /* ... */

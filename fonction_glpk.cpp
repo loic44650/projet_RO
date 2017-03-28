@@ -1,4 +1,4 @@
-void resolutionGLPK(vector<vector<int>> tourneesMin, donnees *p)
+void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, donnees *p)
 { 
     glp_prob *prob; // déclaration d'un pointeur sur le problème
     
@@ -14,11 +14,11 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, donnees *p)
     int nbcreux; // nombre d'éléments de la matrice creuse
     int pos; // compteur utilisé dans le remplissage de la matrice creuse
     int nbcontr = p -> lieu.size();
-    int nbvar = lieu.size() * p -> lieu.size();     
+    int nbvar = p -> lieu.size() * p -> lieu.size();     
 
     /* Transfert de ces données dans les structures utilisées par la bibliothèque GLPK */
     prob = glp_create_prob(); /* allocation mémoire pour le problème */ 
-    glp_set_prob_name(prob, "optmisation tournée"); /* affectation d'un nom (on pourrait mettre NULL) */
+    glp_set_prob_name(prob, "optmisation_tournee"); /* affectation d'un nom (on pourrait mettre NULL) */
     glp_set_obj_dir(prob, GLP_MIN); /* Il s'agit d'un problème de minimisation, on utiliserait la constante GLP_MAX dans le cas contraire */
     
     /* Déclaration du nombre de contraintes (nombre de lignes de la matrice des contraintes) : p.nbcontr */
@@ -50,7 +50,8 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, donnees *p)
 
     /* définition des coefficients des variables dans la fonction objectif */
 
-    for(int i = 1; i <= nbvar; ++i) glp_set_obj_coef(prob, i, p -> tourneesMin[i]);  
+    for(int i = 1; i <= nbvar; ++i)
+            glp_set_obj_coef(prob, i, longeurTournee[i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
     /* Les indices commencent également à 1 ! */
@@ -80,18 +81,20 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, donnees *p)
     glp_load_matrix(prob, nbcreux, ia, ja, ar); 
     
     /* Optionnel : écriture de la modélisation dans un fichier (utile pour debugger) */
-
-    glp_write_lp(prob,NULL,"musee.lp");
+    glp_write_lp(prob, NULL,"optimisation_tournee.lp");
 
     /* Résolution, puis lecture des résultats */
     
     glp_simplex(prob,NULL); glp_intopt(prob,NULL); /* Résolution */
+
     z = glp_mip_obj_val(prob); /* Récupération de la valeur optimale. Dans le cas d'un problème en variables continues, l'appel est différent : z = glp_get_obj_val(prob);*/
-    x = (double *) malloc (p.nbvar * sizeof(double));
-    for(int i = 0; i < p.nbvar; ++i) x[i] = glp_mip_col_val(prob,i+1); /* Récupération de la valeur des variables, Appel différent dans le cas d'un problème en variables continues : for(i = 0;i < p.nbvar;i++) x[i] = glp_get_col_prim(prob,i+1);  */
+    
+    x = (double *) malloc (nbvar * sizeof(double));
+    
+    for(int i = 0; i < nbvar; ++i) x[i] = glp_mip_col_val(prob, i + 1); /* Récupération de la valeur des variables, Appel différent dans le cas d'un problème en variables continues : for(i = 0;i < p.nbvar;i++) x[i] = glp_get_col_prim(prob,i+1);  */
 
     printf("z = %lf\n",z);
-    for(int i = 0; i < p.nbvar; ++i) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
+    for(int i = 0; i < nbvar; ++i) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
     puts("");
 
     /* libération mémoire */

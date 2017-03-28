@@ -89,7 +89,7 @@ vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroup
     return subset;  
 }
 
-vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, donnees *p)
+vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, vector<int> &longueurTournee, donnees *p)
 {
     vector<vector<int>> subset;
     
@@ -124,6 +124,7 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, 
         else
         {	
         	subset.push_back(tmp);
+            longueurTournee.push_back(min);
         	tmp.clear();
     		min = INT_MAX;
         }
