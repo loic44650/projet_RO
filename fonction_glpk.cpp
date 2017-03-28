@@ -28,7 +28,7 @@ void resolutionGLPK(donnees *p)
     for (int i = 1; i <= nbcontr; ++i)
     {
         /* partie indispensable : les bornes sur les contraintes */
-        glp_set_row_bnds(prob, i, GLP_FX, p.droite[i - 1], 1.0); 
+        glp_set_row_bnds(prob, i, GLP_FX, 1], 1); 
         /* Avec GLPK, on peut définir simultanément deux contraintes, si par exemple, on a pour une contrainte i : "\sum x_i >= 0" et "\sum x_i <= 5",
            on écrit alors : glp_set_row_bnds(prob, i, GLP_DB, 0.0, 5.0); la constante GLP_DB signifie qu'il y a deux bornes sur "\sum x_i" qui sont ensuite données
            Ici, nous n'avons qu'une seule contrainte du type "\sum x_i >= p.droite[i-1]" soit une borne inférieure sur "\sum x_i", on écrit donc glp_set_row_bnds(prob, i, GLP_LO, p.droite[i-1], 0.0); le paramètre "0.0" est ignoré. 
@@ -44,9 +44,9 @@ void resolutionGLPK(donnees *p)
     for (int i = 1; i <= p.nbvar; ++i)
     {
         /* partie obligatoire : bornes éventuelles sur les variables, et type */
-        glp_set_col_bnds(prob, i, GLP_DB, 0.0, 1.0); /* bornes sur les variables, comme sur les contraintes */
+        glp_set_col_bnds(prob, i, GLP_DB, 0, 1); /* bornes sur les variables, comme sur les contraintes */
         glp_set_col_kind(prob, i, GLP_BV);  /* les variables sont par défaut continues, nous précisons ici qu'elles sont binaires avec la constante GLP_BV, on utiliserait GLP_IV pour des variables entières */    
-    } 
+    }
 
     /* définition des coefficients des variables dans la fonction objectif */
 

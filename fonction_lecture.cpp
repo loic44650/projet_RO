@@ -1,4 +1,4 @@
-#ifndef FONCTION_LECTURE
+#ifndef FONCTION_LECTURE 	
 #define FONCTION_LECTURE
 
 using namespace std;
