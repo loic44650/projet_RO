@@ -1,4 +1,4 @@
-void resolutionGLPK(donnees *p)
+void resolutionGLPK(vector<vector<int>> tourneesMin, donnees *p)
 { 
     glp_prob *prob; // déclaration d'un pointeur sur le problème
     
@@ -28,7 +28,7 @@ void resolutionGLPK(donnees *p)
     for (int i = 1; i <= nbcontr; ++i)
     {
         /* partie indispensable : les bornes sur les contraintes */
-        glp_set_row_bnds(prob, i, GLP_FX, 1], 1); 
+        glp_set_row_bnds(prob, i, GLP_FX, 1, 1); 
         /* Avec GLPK, on peut définir simultanément deux contraintes, si par exemple, on a pour une contrainte i : "\sum x_i >= 0" et "\sum x_i <= 5",
            on écrit alors : glp_set_row_bnds(prob, i, GLP_DB, 0.0, 5.0); la constante GLP_DB signifie qu'il y a deux bornes sur "\sum x_i" qui sont ensuite données
            Ici, nous n'avons qu'une seule contrainte du type "\sum x_i >= p.droite[i-1]" soit une borne inférieure sur "\sum x_i", on écrit donc glp_set_row_bnds(prob, i, GLP_LO, p.droite[i-1], 0.0); le paramètre "0.0" est ignoré. 
@@ -41,7 +41,7 @@ void resolutionGLPK(donnees *p)
         
     /* On précise le type des variables, les indices commencent à 1 également pour les variables! */
     
-    for (int i = 1; i <= p.nbvar; ++i)
+    for (int i = 1; i <= nbvar; ++i)
     {
         /* partie obligatoire : bornes éventuelles sur les variables, et type */
         glp_set_col_bnds(prob, i, GLP_DB, 0, 1); /* bornes sur les variables, comme sur les contraintes */
@@ -50,33 +50,34 @@ void resolutionGLPK(donnees *p)
 
     /* définition des coefficients des variables dans la fonction objectif */
 
-    for(int i = 1; i <= p.nbvar; ++i) glp_set_obj_coef(prob,i,p.couts[i - i]);  
+    for(int i = 1; i <= nbvar; ++i) glp_set_obj_coef(prob, i, p -> tourneesMin[i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
     /* Les indices commencent également à 1 ! */
 
     nbcreux = 0;
-    for(int i = 0; i < p.nbcontr; ++i) nbcreux += p.sizeContr[i];
+
+    for(int i = 0; i < nbcontr; ++i) nbcreux += p -> lieu[i];
     
     ia = (int *) malloc ((1 + nbcreux) * sizeof(int));
     ja = (int *) malloc ((1 + nbcreux) * sizeof(int));
     ar = (double *) malloc ((1 + nbcreux) * sizeof(double));
     
     pos = 1;
-    for(int i = 0; i < p.nbcontr; ++i)
+    for(int i = 0; i < nbcontr; ++i)
     {
-        for(int j = 0; j < p.sizeContr[i]; ++j)
+        for(int j = 0; j < p -> lieu[i]; ++j)
         {
             ia[pos] = i + 1;
-            ja[pos] = p.contr[i][j];
+            ja[pos] = p -> distancier[i][j];
             ar[pos] = 1.0;
-            pos++;
+            ++pos;
         }
     }
     
     /* chargement de la matrice dans le problème */
     
-    glp_load_matrix(prob,nbcreux,ia,ja,ar); 
+    glp_load_matrix(prob, nbcreux, ia, ja, ar); 
     
     /* Optionnel : écriture de la modélisation dans un fichier (utile pour debugger) */
 
@@ -95,9 +96,4 @@ void resolutionGLPK(donnees *p)
 
     /* libération mémoire */
     glp_delete_prob(prob); 
-    free(p.couts);
-    free(p.sizeContr);
-    free(p.droite);
-    for(int i = 0; i < p.nbcontr; ++i) free(p.contr[i]);
-    free(p.contr);
 }
