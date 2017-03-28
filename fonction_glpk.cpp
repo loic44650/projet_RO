@@ -1,3 +1,8 @@
+#ifndef FONCTION_GLPK    
+#define FONCTION_GLPK
+
+using namespace std;
+
 void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, donnees *p)
 { 
     glp_prob *prob; // déclaration d'un pointeur sur le problème
@@ -51,7 +56,7 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     /* définition des coefficients des variables dans la fonction objectif */
 
     for(int i = 1; i <= nbvar; ++i)
-            glp_set_obj_coef(prob, i, longeurTournee[i]);  
+            glp_set_obj_coef(prob, i, longeurTournee[i - i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
     /* Les indices commencent également à 1 ! */
@@ -100,3 +105,5 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     /* libération mémoire */
     glp_delete_prob(prob); 
 }
+
+#endif

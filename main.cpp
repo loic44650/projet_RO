@@ -89,15 +89,19 @@ int main(int argc, char *argv[])
 
 
 
+
     /* .... */
 
 
 
-    /* Déclaration des variables necéssaires au calcul des tournées possibles */
 
+    /* Déclaration des variables necéssaires au calcul des tournées possibles */
     vector<vector<int>> tournees;
 	vector<int> longueurTournee;
     
+
+
+
     tournees = ensembleDesParties(&p);
     //cout << "Tout les regroupements : " << endl;
     //affiche(tournees);
@@ -116,12 +120,15 @@ int main(int argc, char *argv[])
     //cout << endl;
 
 
+
+
     resolutionGLPK(tournees, longueurTournee, &p);
 
 
 
 
     /* ... */
+
 
 
 
