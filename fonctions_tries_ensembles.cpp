@@ -31,17 +31,28 @@ vector<vector<int>> ensembleDesParties(donnees *p)
     vector<vector<int>> subset;
     vector<int> empty;
 
+    vector<int> poid;
+    poid.push_back(0);
+    
     subset.push_back(empty);
 
     for (int i = 0; i < p -> lieu.size(); ++i)
     {
         vector<vector<int>> subsetTemp = subset;
+        vector<int> poids = poid;
 
         for (int j = 0; j < subsetTemp.size(); ++j)    
-            subsetTemp[j].push_back(p -> lieu[i]);
+        {    
+            poids[j] += p -> capacite[i];
 
-        for (int j = 0; j < subsetTemp.size(); ++j)
-            subset.push_back(subsetTemp[j]);
+            if (poids[j] <= p -> capaciteDrone)
+            {
+                subsetTemp[j].push_back(i + 1);
+                subset.push_back(subsetTemp[j]);
+                poid.push_back(poids[j]);
+            }
+
+        }
     }
 
     subset.erase(subset.begin());
@@ -50,25 +61,25 @@ vector<vector<int>> ensembleDesParties(donnees *p)
 }
 
 
-vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement, donnees *p)
-{
-    vector<vector<int>> subset;
+// vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement, donnees *p)
+// {
+//     vector<vector<int>> subset;
 
-    int cap;
+//     int cap;
 
-    for (int i = 0; i < regroupement.size(); ++i)
-    {
-        cap = 0;
+//     for (int i = 0; i < regroupement.size(); ++i)
+//     {
+//         cap = 0;
         
-        for (int j = 0; j < regroupement[i].size(); ++j)
-            cap +=  p -> capacite[regroupement[i][j] - 1];
+//         for (int j = 0; j < regroupement[i].size(); ++j)
+//             cap +=  p -> capacite[regroupement[i][j] - 1];
 
-        if (cap <= p -> capaciteDrone)
-            subset.push_back(regroupement[i]);
-    }
+//         if (cap <= p -> capaciteDrone)
+//             subset.push_back(regroupement[i]);
+//     }
 
-    return subset;  
-}
+//     return subset;  
+// }
 
 
 vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, donnees *p)
