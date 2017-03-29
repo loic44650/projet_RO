@@ -135,4 +135,19 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, 
     return subset;
 }
 
+
+vector<int> nombreOccurencePuitTournee(vector<vector<int>> tournee, donnees *p)
+{
+    vector<int> nbOccu;
+
+    for (int i = 0; i < p -> lieu.size(); ++i)
+        nbOccu.push_back(0);
+
+    for (int i = 0; i < tournee.size(); ++i)
+        for (int j = 0; j < tournee[i].size(); ++j)
+            nbOccu[tournee[i][j] - 1] += 1;
+
+    return nbOccu;
+}
+
 #endif

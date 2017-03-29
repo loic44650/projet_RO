@@ -32,7 +32,7 @@ struct donnees
 
 #include "fonction_lecture.cpp"
 #include "fonctions_tries_ensembles.cpp"
-#include "fonction_glpk.cpp"
+//#include "fonction_glpk.cpp"
 
 
 /* structures et fonctions de mesure du temps CPU */
@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     /* Déclaration des variables necéssaires au calcul des tournées possibles */
     vector<vector<int>> tournees;
 	vector<int> longueurTournee;
-    
+    vector<int> nbOccu;
 
 
 
@@ -119,10 +119,14 @@ int main(int argc, char *argv[])
     //affiche(tournees);
     //cout << endl;
 
+    nbOccu = nombreOccurencePuitTournee(tournees, &p);
+    cout << "Nombre d'occurence de chaques villes dans nos tournée possibles : " << endl;
+    for (int k = 0; k < nbOccu.size(); ++k)
+    {
+    	cout << nbOccu[k] << ";";
+    }
 
-
-
-    resolutionGLPK(tournees, longueurTournee, &p);
+    //resolutionGLPK(tournees, longueurTournee, &p);
 
 
 
