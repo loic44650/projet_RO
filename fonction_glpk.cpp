@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, donnees *p)
+void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, vector<int> nbOccu, donnees *p)
 { 
     glp_prob *prob; // déclaration d'un pointeur sur le problème
     
@@ -70,9 +70,10 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     ar = (double *) malloc ((1 + nbcreux) * sizeof(double));
     
     pos = 1;
-    for(int i = 0; i < nbcontr; ++i)
+
+    for(int i = 0; i < nbOccu.size(); ++i)
     {
-        for(int j = 0; j < p -> lieu[i]; ++j)
+        for(int j = 0; j < nbOccu[i]; ++j)
         {
             ia[pos] = i + 1;
             ja[pos] = p -> distancier[i][j];
@@ -80,6 +81,17 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
             ++pos;
         }
     }
+
+    // for(int i = 0; i < nbcontr; ++i)
+    // {
+    //     for(int j = 0; j < p -> lieu[i]; ++j)
+    //     {
+    //         ia[pos] = i + 1;
+    //         ja[pos] = p -> distancier[i][j];
+    //         ar[pos] = 1.0;
+    //         ++pos;
+    //     }
+    // }
     
     /* chargement de la matrice dans le problème */
     

@@ -96,8 +96,8 @@ void lecture_data(char *file, donnees *p)
      
         p -> distancier.resize(nblieux);
 
-        for (int i = 0; i < nblieux; i++)
-            p->distancier[i].resize(nblieux);
+        for (int i = 0; i < nblieux; ++i)
+            p -> distancier[i].resize(nblieux);
         
         for(int i = 0; i < nblieux; ++i)
         {    
