@@ -90,14 +90,14 @@ productivités */
         /* Les indices commencent à 1 */
         p->prod = (int **) malloc((1 + p->nbPM) * sizeof(int*));
         for(i = 1;i <= p->nbPM;i++)
-                p->prod[i] = (int *) malloc((1 + p->nbPM) * sizeof(int));
+            p->prod[i] = (int *) malloc((1 + p->nbPM) * sizeof(int));
 
         /* Lecture des productivités */
         for(i = 1; i <= p->nbPM; i++)
-                for(j = 1; j <= p->nbPM; j++) {
-                        fscanf(fin,"%d",&val);
-                    p->prod[i][j] = val;
-                }
+            for(j = 1; j <= p->nbPM; j++) {
+                fscanf(fin,"%d",&val);
+                p->prod[i][j] = val;
+            }
 
         fclose(fin); // Fermeture du fichier
 }
@@ -113,20 +113,20 @@ productivités */
         /* Série 1 de contraintes */
         pos = 1;
         for(i = 1; i <= p.nbPM; i++)
-                for(j = 1; j <= p.nbPM; j++)
-                {
-                        ia[pos] = i;
-                        ja[pos] = (i-1)*p.nbPM + j;
-                        ar[pos] = 1.0;
-                        pos++;
-                }
+            for(j = 1; j <= p.nbPM; j++)
+            {
+                ia[pos] = i;
+                ja[pos] = (i-1)*p.nbPM + j;
+                ar[pos] = 1.0;
+                pos++;
+            }
 
         /* Série 2 de contraintes */
         for(i = 1; i <= p.nbPM; i++)
-                for(j = 1; j <= p.nbPM; j++)
-                {
-                        ia[pos] = i + p.nbPM;
-                        ja[pos] = i + p.nbPM * (j-1);
-                        ar[pos] = 1.0;
-                        pos++;
-                }
+            for(j = 1; j <= p.nbPM; j++)
+            {
+                ia[pos] = i + p.nbPM;
+                ja[pos] = i + p.nbPM * (j-1);
+                ar[pos] = 1.0;
+                pos++;
+            }

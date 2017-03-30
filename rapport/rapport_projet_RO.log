@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.2.11)  30 MAR 2017 09:47
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016/Arch Linux) (preloaded format=pdflatex 2017.2.11)  30 MAR 2017 10:08
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -730,24 +730,27 @@ Package Fancyhdr Warning: \headheight is too small (12.0pt):
 \openout4 = `rapport_projet_RO.toc'.
 
  [2]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 52.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 52.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 96.
+ [3]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 96.
  (./rapport_projet_RO.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 52.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 52.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 96.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 96.
 Package rerunfilecheck Info: File `rapport_projet_RO.out' has not changed.
-(rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 52.
+(rerunfilecheck)             Checksum: 0D7522CD5A29F09A001DDFAEC1461152;517.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 96.
  ) 
 Here is how much of TeX's memory you used:
- 7917 strings out of 493013
- 111514 string characters out of 6139317
+ 7947 strings out of 493013
+ 111877 string characters out of 6139317
  210226 words of memory out of 5000000
- 11350 multiletter control sequences out of 15000+600000
- 16588 words of font info for 41 fonts, out of 8000000 for 9000
+ 11369 multiletter control sequences out of 15000+600000
+ 18139 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  30i,12n,43p,250b,439s stack positions out of 5000i,500n,10000p,200000b,80000s
- </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1728.600p
+ </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1440.600p
+k> </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecbx1200.600p
+k> </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx1728.600p
 k> </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm0700.600p
 k> </home/divinity/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecrm1000.600p
 k> </usr/share/texmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmsy7.pk> </home/div
@@ -756,10 +759,10 @@ y/.texlive/texmf-var/fonts/pk/ljfour/jknappen/ec/ecsx2074.600pk> </usr/share/te
 xmf-dist/fonts/pk/ljfour/public/cm/dpi600/cmr12.pk> </home/divinity/.texlive/te
 xmf-var/fonts/pk/ljfour/public/cm/cmmi12.600pk> </home/divinity/.texlive/texmf-
 var/fonts/pk/ljfour/jknappen/ec/ecrm1200.600pk>
-Output written on rapport_projet_RO.pdf (2 pages, 26791 bytes).
+Output written on rapport_projet_RO.pdf (3 pages, 54895 bytes).
 PDF statistics:
- 132 PDF objects out of 1000 (max. 8388607)
- 50 compressed objects within 1 object stream
- 4 named destinations out of 1000 (max. 500000)
- 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 271 PDF objects out of 1000 (max. 8388607)
+ 105 compressed objects within 2 object streams
+ 13 named destinations out of 1000 (max. 500000)
+ 65 words of extra memory for PDF output out of 10000 (max. 10000000)
 

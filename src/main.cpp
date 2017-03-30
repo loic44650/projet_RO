@@ -98,7 +98,7 @@ int main(int argc, char *argv[])
     /* Déclaration des variables necéssaires au calcul des tournées possibles */
     vector<vector<int>> tournees;
 	vector<int> longueurTournee;
-    vector<int> nbOccu;
+    vector<vector<int>> occu;
 
 
 
@@ -113,20 +113,16 @@ int main(int argc, char *argv[])
     //cout << endl;
     
     tournees = permutationLesPlusPetites(tournees, longueurTournee, &p);
-    //cout << "Les plus courtes tournées : " << endl;
-    //affiche(tournees);
-    //cout << endl;
+    cout << "Les plus courtes tournées : " << endl;
+    affiche(tournees);
+    cout << endl;
 
-    nbOccu = nombreOccurencePuitTournee(tournees, &p);
-    // cout << "Nombre d'occurence de chaques villes dans nos tournée possibles : " << endl;
-    // for (int k = 0; k < nbOccu.size(); ++k)
-    // {
-    // 	cout << nbOccu[k] << ";";
-    // }
+    occu = indiceVecteurOccu(tournees, &p);
+    cout << "Indice des vecteur contenant le lieu i : " << endl;
+    affiche(occu);
+    cout << endl;
 
-
-
-    resolutionGLPK(tournees, longueurTournee, nbOccu, &p);
+    resolutionGLPK(tournees, longueurTournee, occu, &p);
 
 
 

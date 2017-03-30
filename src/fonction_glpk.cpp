@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, vector<int> nbOccu, donnees *p)
+void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee, vector<vector<int>> occu, donnees *p)
 { 
     glp_prob *prob; // déclaration d'un pointeur sur le problème
     
@@ -20,7 +20,6 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     int pos; // compteur utilisé dans le remplissage de la matrice creuse
     int nbcontr = p -> lieu.size();
     int nbvar = tourneesMin.size();  
-    //NBVAR = nombre de parcours   
 
     /* Transfert de ces données dans les structures utilisées par la bibliothèque GLPK */
     prob = glp_create_prob(); /* allocation mémoire pour le problème */ 
@@ -58,14 +57,14 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     /* définition des coefficients des variables dans la fonction objectif */
 
     for (int i = 1; i <= nbvar; ++i)
-            glp_set_obj_coef(prob, i, longeurTournee[i - i]);  
+        glp_set_obj_coef(prob, i, longeurTournee[i - i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
     /* Les indices commencent également à 1 ! */
 
     nbcreux = 0; // en fait c'est plutôt ce qui va être chargé non vide. Donc dans notre matrice il s'agit de savoir combien de fois on aura nos variables de décision qui vont apparaitre. Donc je vais faire la somme de mes occurences 
 
-    for (unsigned int i = 0; i < nbOccu.size(); ++i) nbcreux += nbOccu[i];
+    for (unsigned int i = 0; i < occu.size(); ++i) nbcreux += occu[i].size();
     
     ia = (int *) malloc ((1 + nbcreux) * sizeof(int));
     ja = (int *) malloc ((1 + nbcreux) * sizeof(int));
@@ -75,14 +74,13 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
 
     //attention les indices commencent à un
 
-
-    for(unsigned int i = 0; i < p->lieu.size(); ++i)
+    for(unsigned int i = 0; i < occu.size(); ++i)
     {
-        for(int j = 0; j < nbOccu[i]; ++j)
+        for(unsigned int j = 0; j < occu[i].size(); ++j)
         {
             ia[pos] = i + 1;//la ligne de la matrice et ça c'est en fait notre ligne de contrainte
-            //pour p as faire crash load matrix
-            ja[pos] = contrainte[i][j];//la colonne de la matrice et donc en fait c'est nos lieux
+            //pour pas faire crash load matrix
+            ja[pos] = occu[i][j];//la colonne de la matrice et donc en fait c'est nos lieux
             //au final on a une coordonnée dans la matrice et on vient mettre un 1 
             /// ja c'est quel var de decision, ia c'est sur quelle contrainte et le ar c'est ce qu'on vient mettre
             ar[pos] = 1.0;//on met un 1 ici
@@ -91,17 +89,6 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
             //il faut que je fasse comme au tp 3 c'est à dire dès que je génère mes regroupements minimaux et que je sais que dans mon regroupement j'ai la var de décision xi. Alors dans mon tableau contrainte à l'indice i, j'ajoute le numéro de mon regroupement
         }
     }
-
-    // for(int i = 0; i < nbcontr; ++i)
-    // {
-    //     for(int j = 0; j < p -> lieu[i]; ++j)
-    //     {
-    //         ia[pos] = i + 1;
-    //         ja[pos] = p -> distancier[i][j];
-    //         ar[pos] = 1.0;
-    //         ++pos;
-    //     }
-    // }
     
     /* chargement de la matrice dans le problème */
     
