@@ -31,7 +31,7 @@ struct donnees
 
 
 #include "fonction_lecture.cpp"
-#include "fonctions_tries_ensembles.cpp"
+#include "fonctions_tournees.cpp"
 #include "fonction_glpk.cpp"
 
 
@@ -102,22 +102,16 @@ int main(int argc, char *argv[])
 
 
 
-    tournees = ensembleDesParties(&p);
+    tournees = ensembleDesPartiesPossibles(&p);
     //cout << "Tout les regroupements : " << endl;
     //affiche(tournees);
     //cout << endl;
     
-    /* PLUS NECESSAIRE
-    tournees = ensembleDesPartiesPossibles(tournees, &p);
-    cout << "Tout les regroupements possibles : " << endl;
-    affiche(tournees);
-    cout << endl;
-    */
-
     tournees = ensembleDesPermutationsPossibles(tournees, &p);
     //cout << "Tout les regroupements permutes possibles : " << endl;
     //affiche(tournees);
     //cout << endl;
+    
     tournees = permutationLesPlusPetites(tournees, longueurTournee, &p);
     //cout << "Les plus courtes tournées : " << endl;
     //affiche(tournees);
@@ -145,7 +139,7 @@ int main(int argc, char *argv[])
     /* Problème résolu, arrêt du chrono */
     
     crono_stop();
-    temps = crono_ms()/1000,0;
+    temps = crono_ms()/1000.0;
     
     /* Affichage des résultats (à compléter) */
     

@@ -8,58 +8,6 @@ using namespace std;
 /*                 Fonction de lecture                               */
 /*********************************************************************/
 
-// void lecture_data(char *file, donnees *p)
-// {
-//     FILE *fin;
-    
-//     int val;
-//     fin = fopen(file, "rt");
-    
-//     /* Lecture du nombre de villes */
-
-//     int nblieux;  
-
-//     fscanf(fin, "%d", &val);
-//     nblieux = val;
-
-//     for (int k = 1; k <= nblieux; ++k)
-//     {
-//         p -> lieu.push_back(k);
-//     }
-
-//     /* Lecture de la capacité */
-    
-//     fscanf(fin, "%d", &val);
-//     p -> capaciteDrone = val;
-    
-//     /* Lecture des demandes des clients */
-    
-//     for(int i = 1; i < nblieux; ++i)
-//     {
-//         fscanf(fin, "%d", &val);
-//         p -> capacite.push_back(val);
-//     }
- 
-//     /* Lecture du distancier */
-
-//     p -> distancier.resize(nblieux);
-
-//     for (int i = 0; i < nblieux; i++)
-//         p->distancier[i].resize(nblieux);
-    
-//     for(int i = 0; i < nblieux; ++i)
-//     {    
-//         for(int j = 0; j < nblieux; ++j)
-//         {
-//             fscanf(fin, "%d", &val);         
-//             p -> distancier[i][j] = val;
-//         }
-//     }
-
-//     fclose(fin);
-// }
-
-
 
 void lecture_data(char *file, donnees *p)
 {

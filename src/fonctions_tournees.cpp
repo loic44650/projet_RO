@@ -11,10 +11,10 @@ using namespace std;
 
 void affiche(vector<vector<int>> storage)
 {
-    for (int i = 0; i < storage.size(); ++i)
+    for (unsigned int i = 0; i < storage.size(); ++i)
     {   
         cout << "{";;
-        for (int j = 0; j < storage[i].size(); ++j)
+        for (unsigned int j = 0; j < storage[i].size(); ++j)
         {
             if (j == 0)
                 cout << storage[i][j];
@@ -26,7 +26,7 @@ void affiche(vector<vector<int>> storage)
 }
 
 
-vector<vector<int>> ensembleDesParties(donnees *p)
+vector<vector<int>> ensembleDesPartiesPossibles(donnees *p)
 {
     vector<vector<int>> subset;
     vector<int> empty;
@@ -36,12 +36,12 @@ vector<vector<int>> ensembleDesParties(donnees *p)
     
     subset.push_back(empty);
 
-    for (int i = 0; i < p -> lieu.size(); ++i)
+    for (unsigned int i = 0; i < p -> lieu.size(); ++i)
     {
         vector<vector<int>> subsetTemp = subset;
         vector<int> poids = poid;
 
-        for (int j = 0; j < subsetTemp.size(); ++j)    
+        for (unsigned int j = 0; j < subsetTemp.size(); ++j)    
         {    
             poids[j] += p -> capacite[i];
 
@@ -61,33 +61,12 @@ vector<vector<int>> ensembleDesParties(donnees *p)
 }
 
 
-// vector<vector<int>> ensembleDesPartiesPossibles(vector<vector<int>> regroupement, donnees *p)
-// {
-//     vector<vector<int>> subset;
-
-//     int cap;
-
-//     for (int i = 0; i < regroupement.size(); ++i)
-//     {
-//         cap = 0;
-        
-//         for (int j = 0; j < regroupement[i].size(); ++j)
-//             cap +=  p -> capacite[regroupement[i][j] - 1];
-
-//         if (cap <= p -> capaciteDrone)
-//             subset.push_back(regroupement[i]);
-//     }
-
-//     return subset;  
-// }
-
-
 vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroupement, donnees *p)
 {
     vector<vector<int>> subset;
     vector<int> levecapush;
  
-    for (int i = 0; i < regroupement.size(); ++i)
+    for (unsigned int i = 0; i < regroupement.size(); ++i)
     {
         do {
             subset.push_back(regroupement[i]);
@@ -100,11 +79,12 @@ vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroup
     return subset;  
 }
 
+
 vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, vector<int> &longueurTournee, donnees *p)
 {
     vector<vector<int>> subset;
     
-    int c = 0;
+    unsigned int c = 0;
     int s = 0;
 	vector<int> tmp;
     int min = INT_MAX;
@@ -118,7 +98,7 @@ vector<vector<int>> permutationLesPlusPetites(vector<vector<int>> regroupement, 
         {   
             s += p -> distancier[0][regroupement[c][0]];
 
-            for (int i = 0; i < regroupement[c].size() - 1; ++i)
+            for (unsigned int i = 0; i < regroupement[c].size() - 1; ++i)
             {
             	s += p -> distancier[regroupement[c][i]][regroupement[c][i + 1]];
             	
@@ -151,11 +131,11 @@ vector<int> nombreOccurencePuitTournee(vector<vector<int>> tournee, donnees *p)
 {
     vector<int> nbOccu;
 
-    for (int i = 0; i < p -> lieu.size(); ++i)
+    for (unsigned int i = 0; i < p -> lieu.size(); ++i)
         nbOccu.push_back(0);
 
-    for (int i = 0; i < tournee.size(); ++i)
-        for (int j = 0; j < tournee[i].size(); ++j)
+    for (unsigned int i = 0; i < tournee.size(); ++i)
+        for (unsigned int j = 0; j < tournee[i].size(); ++j)
             nbOccu[tournee[i][j] - 1] += 1;
 
     return nbOccu;

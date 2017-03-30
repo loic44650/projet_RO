@@ -57,7 +57,7 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
 
     /* définition des coefficients des variables dans la fonction objectif */
 
-    for(int i = 1; i <= nbvar; ++i)
+    for (int i = 1; i <= nbvar; ++i)
             glp_set_obj_coef(prob, i, longeurTournee[i - i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
@@ -65,7 +65,7 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
 
     nbcreux = 0; // en fait c'est plutôt ce qui va être chargé non vide. Donc dans notre matrice il s'agit de savoir combien de fois on aura nos variables de décision qui vont apparaitre. Donc je vais faire la somme de mes occurences 
 
-    for(int i = 0; i < nbOccu.size(); ++i) nbcreux += nbOccu[i];
+    for (unsigned int i = 0; i < nbOccu.size(); ++i) nbcreux += nbOccu[i];
     
     ia = (int *) malloc ((1 + nbcreux) * sizeof(int));
     ja = (int *) malloc ((1 + nbcreux) * sizeof(int));
@@ -76,7 +76,7 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     //attention les indices commencent à un
 
 
-    for(int i = 0; i < p->lieu.size(); ++i)
+    for(unsigned int i = 0; i < p->lieu.size(); ++i)
     {
         for(int j = 0; j < nbOccu[i]; ++j)
         {
