@@ -1,0 +1,52 @@
+\documentclass[a4paper,sffamily,12pt]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[french]{babel}
+\usepackage[utf8]{inputenc}
+
+% Customization des listes
+\usepackage{enumitem}
+\usepackage{pifont}
+
+% Insertion d'image
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{xcolor}
+
+% Création de lien
+\usepackage[colorlinks,linkcolor=blue]{hyperref}
+
+% Formatage des titres de sections
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries\sffamily}{\thesection.}{0.33em}{}[\hrule]
+
+ % En-tête
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\renewcommand\headrulewidth{1pt}
+\fancyhead[L]{Réseaux et télécoms}
+\fancyhead[R]{$X6I0040$}
+
+% Permet de mettre du texte au dessus du titre
+\usepackage{titling}
+\renewcommand{\maketitlehooka}{\noindent MAHIER Loïc \hfill groupe 601B\\ JEHANNO Clément \hfill \\}
+
+% Titre
+\title{\vspace{\fill}\LARGE\bfseries\sffamily Rapport de projet\protect\footnote{rapport réalisé sous \LaTeX} : Recherche opérationnelle\vspace{\fill}}
+
+\begin{document}
+
+	\date{} % Supprime la date
+	\maketitle % Affiche le titre
+
+	\thispagestyle{fancy} % Permet de mettre le titre sur la page ''fancy''
+	
+	\newpage
+			
+	\renewcommand{\contentsname}{Sommaire}
+	\tableofcontents
+	
+	\newpage
+				
+\end{document}
