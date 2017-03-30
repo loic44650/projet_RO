@@ -57,7 +57,7 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     /* définition des coefficients des variables dans la fonction objectif */
 
     for (int i = 1; i <= nbvar; ++i)
-        glp_set_obj_coef(prob, i, longeurTournee[i - i]);  
+        glp_set_obj_coef(prob, i, longeurTournee[i]);  
     
     /* Définition des coefficients non-nuls dans la matrice des contraintes, autrement dit les coefficients de la matrice creuse */
     /* Les indices commencent également à 1 ! */
@@ -78,18 +78,18 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     {
         for(unsigned int j = 0; j < occu[i].size(); ++j)
         {
-            cout << "pos : " << pos << endl;
+            //cout << "pos : " << pos << endl;
             ia[pos] = i + 1;//la ligne de la matrice et ça c'est en fait notre ligne de contrainte
             //pour pas faire crash load matrix
-            cout << "ia : " << ia[pos] << endl;
+            //cout << "ia : " << ia[pos] << endl;
             ja[pos] = occu[i][j];//la colonne de la matrice et donc en fait c'est nos lieux
             //au final on a une coordonnée dans la matrice et on vient mettre un 1 
             /// ja c'est quel var de decision, ia c'est sur quelle contrainte et le ar c'est ce qu'on vient mettre
-            cout << "ja : " << ja[pos] << endl;            
+            //cout << "ja : " << ja[pos] << endl;            
             ar[pos] = 1.0;//on met un 1 ici
-            cout << "ar : " << ar[pos] << endl;
+            //cout << "ar : " << ar[pos] << endl;
             ++pos;
-            cout << endl;
+            //cout << endl;
             //il faut que je fasse comme au tp 3 c'est à dire dès que je génère mes regroupements minimaux et que je sais que dans mon regroupement j'ai la var de décision xi. Alors dans mon tableau contrainte à l'indice i, j'ajoute le numéro de mon regroupement
         }
     }
@@ -109,10 +109,10 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     
     x = (double *) malloc (nbvar * sizeof(double));
     
-    for(int i = 0; i < nbvar; ++i) x[i] = glp_mip_col_val(prob, i + 1); /* Récupération de la valeur des variables, Appel différent dans le cas d'un problème en variables continues : for(i = 0;i < p.nbvar;i++) x[i] = glp_get_col_prim(prob,i+1);  */
+    for (int i = 0; i < nbvar; ++i) x[i] = glp_mip_col_val(prob, i + 1); /* Récupération de la valeur des variables, Appel différent dans le cas d'un problème en variables continues : for(i = 0;i < p.nbvar;i++) x[i] = glp_get_col_prim(prob,i+1);  */
 
     printf("z = %lf\n",z);
-    for(int i = 0; i < nbvar; ++i) printf("x%c = %d, ",'B'+i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
+    for (int i = 0; i < nbvar; ++i) printf("x%d = %d, ",1 + i,(int)(x[i] + 0.5)); /* un cast est ajouté, x[i] pourrait être égal à 0.99999... */ 
     puts("");
 
     /* libération mémoire */

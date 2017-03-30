@@ -118,9 +118,9 @@ int main(int argc, char *argv[])
     //cout << endl;
 
     occu = indiceVecteurOccu(tournees, &p);
-    cout << "Indice des vecteur contenant le lieu i : " << endl;
-    affiche(occu);
-    cout << endl;
+    //cout << "Indice des vecteur contenant le lieu i : " << endl;
+    //affiche(occu);
+    //cout << endl;
 
     resolutionGLPK(tournees, longueurTournee, occu, &p);
 
