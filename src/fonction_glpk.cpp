@@ -78,14 +78,18 @@ void resolutionGLPK(vector<vector<int>> tourneesMin, vector<int> longeurTournee,
     {
         for(unsigned int j = 0; j < occu[i].size(); ++j)
         {
+            cout << "pos : " << pos << endl;
             ia[pos] = i + 1;//la ligne de la matrice et ça c'est en fait notre ligne de contrainte
             //pour pas faire crash load matrix
+            cout << "ia : " << ia[pos] << endl;
             ja[pos] = occu[i][j];//la colonne de la matrice et donc en fait c'est nos lieux
             //au final on a une coordonnée dans la matrice et on vient mettre un 1 
             /// ja c'est quel var de decision, ia c'est sur quelle contrainte et le ar c'est ce qu'on vient mettre
+            cout << "ja : " << ja[pos] << endl;            
             ar[pos] = 1.0;//on met un 1 ici
+            cout << "ar : " << ar[pos] << endl;
             ++pos;
-
+            cout << endl;
             //il faut que je fasse comme au tp 3 c'est à dire dès que je génère mes regroupements minimaux et que je sais que dans mon regroupement j'ai la var de décision xi. Alors dans mon tableau contrainte à l'indice i, j'ajoute le numéro de mon regroupement
         }
     }

@@ -135,7 +135,7 @@ vector<vector<int>> indiceVecteurOccu(vector<vector<int>> tournee, donnees *p)
 
     for (unsigned int i = 0; i < tournee.size(); ++i)
         for (unsigned int j = 0; j < tournee[i].size(); ++j)
-            occu[tournee[i][j] - 1].push_back(i);
+            occu[tournee[i][j] - 1].push_back(i + 1);
 
     return occu;
 }

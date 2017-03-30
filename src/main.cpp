@@ -113,9 +113,9 @@ int main(int argc, char *argv[])
     //cout << endl;
     
     tournees = permutationLesPlusPetites(tournees, longueurTournee, &p);
-    cout << "Les plus courtes tournées : " << endl;
-    affiche(tournees);
-    cout << endl;
+    //cout << "Les plus courtes tournées : " << endl;
+    //affiche(tournees);
+    //cout << endl;
 
     occu = indiceVecteurOccu(tournees, &p);
     cout << "Indice des vecteur contenant le lieu i : " << endl;
