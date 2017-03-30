@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
 
 
 
-    //resolutionGLPK(tournees, longueurTournee, nbOccu, &p);
+    resolutionGLPK(tournees, longueurTournee, nbOccu, &p);
 
 
 
