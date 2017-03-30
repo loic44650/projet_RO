@@ -32,7 +32,7 @@ struct donnees
 
 #include "fonction_lecture.cpp"
 #include "fonctions_tries_ensembles.cpp"
-//#include "fonction_glpk.cpp"
+#include "fonction_glpk.cpp"
 
 
 /* structures et fonctions de mesure du temps CPU */
