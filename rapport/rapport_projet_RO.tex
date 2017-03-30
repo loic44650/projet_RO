@@ -4,6 +4,16 @@
 \usepackage[french]{babel}
 \usepackage[utf8]{inputenc}
 
+
+%\usepackage{algorithm2e}
+
+\usepackage[french,linesnumbered,algoruled]{algorithm2e}
+
+\makeatletter
+\renewcommand{\algocf@captiontext}[2]{\AlCapNameSty{\centerline{\AlCapNameFnt{}#2}}}
+\makeatother
+
+
 % Customization des listes
 \usepackage{enumitem}
 \usepackage{pifont}
@@ -12,6 +22,7 @@
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{xcolor}
+
 
 % Création de lien
 \usepackage[colorlinks,linkcolor=blue]{hyperref}
@@ -53,6 +64,9 @@
 	
 		\vspace{0.5cm}
 
+			Trumpland étant ravagée il est de notre devoir de survivre face à l'adversité du milieu. Suite à l'écatombe deux pseudos informaticiens tirés de leurs études avant même de commencer leur masters doivent mettre en place une stratégie optimale pour récupérér de l'eau afin de vivre. Le problème est le suivant : un drone possédant une capacité d'eau maximale doit aller visiter plusieurs lieux de pompage et ramener toute l'eau en effectuant un chemin minimum.\\
+Dans le cadre de notre projet nous avons procédés de deux manières : premièrement, afin de récupérer toutes les regroupements possibles par notre drone (nous entendons par possible qui ne dépasse pas la capacité d'eau que peut porter le drone) nous avons fait un algorithme qui calcule tous les regroupements possibles. Ensuite, en connaissant ces regroupements nous avons cherché la permutation qui nous permettait de parcourir ce regroupement de la manière la plus courte possible. Notre deuxième approche fut la manière dont nous avons résolu le problème, une fois toutes nos données récupérées il faut les traiter, pour se faire nous sommes passés par la bibliothèque glpk en c. Notre code est un mélange de c et de c++ car certaines libraires du c++ (next\_permutation, vector, etc.) nous sont plus familières mais le besoin du c s'est fait ressentir pour l'utilisation de la libraire glpk.
+
 	\section{Partie algorithmique}
 	
 		\vspace{0.5cm}
@@ -60,37 +74,108 @@
 		\subsection{Algorithme d'énumération des regroupements possible}
 			
 			\vspace{0.5cm}
-		
-		
-	
+
+				Ce premier algorithme nous permet de générer tous nos regroupements possibles. Il nous permet donc de générer tous les sous-ensembles de nos lieux qui ne dépassent pas la capacité du drone. Par exemple, le parcours des lieux 1,2,4,5 sera exclu de nos regroupements car ici le volume d'eau est de 12 ce qui dépasse la capacité du drone.
+
+			\newpage 
+
+			\IncMargin{1em}
+			\begin{algorithm}
+				\caption{ensembleDesPartiesPossibles}				
+				\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}			
+				\Input{Donnees *p}
+				\Output{vector<vector<int> >}
+				\KwData{vector<vector<int>> subset, vector<int> poid, vector<int> empty }
+				\BlankLine
+				$poid.push\_back(0)$\\
+				$subset.push\_back(empty)$\\
+				\For{i allant de 0 à p->lieux.size()}{
+					$vector<vector<int>> subsetTemp = subset$\\
+					$vector<int> poids = poid$\\
+					\For{j allant de 0 à subsetTemp.size()}{
+						$poids[j] += p -> capacite[i]$\\
+						\If{poids[j] <= p -> capaciteDrone}{
+							$subsetTemp[j].push\_back(i + 1)$\\
+						           $subset.push\_back(subsetTemp[j])$\\
+						           $poid.push\_back(poids[j])$\\
+						}
+					}
+				}
+				$subset.erase(subset.begin())$\\
+				$return subset$ \\
+			\end{algorithm}\DecMargin{1em}
+
+				On commence par parcourir tous nos lieux. Pour chaque lieu on ajoute la capacité, si la capacité ne dépasse pas celle du drone alors on ajoute donc notre à vecteur déjà existant le lieu qu'on vient de visiter. Notre vecteur déjà existant contient les lieux qu'il a déjà parcouru et donc qu'il a déjà stocké afin de générer les sous ensembles adéquat. Ensuite, on push\_back le vecteur tmp sur lequel on travaille dans notre subset. On ajoute aussi le poids dans le vecteur de poids.\\
+						
+			\newpage
+
 		
 		\subsection{Algorithme d'énumération des tournées}	
 			
 			\vspace{0.5cm}
-	
-	
-	
+
+				Une fois que on connait les regroupements possibles il faut savoir quelles sont tournées, autrement dit, l'ordre dans lequel on parcourt chaque regroupement de sorte à faire le moins de chemin possible.
+
+
+			\IncMargin{1em}
+			\begin{algorithm}
+				\caption{permutationsLesPlusPetites}				
+				\SetKwInOut{Input}{input}\SetKwInOut{Output}{output}			
+				\Input{Donnees *p, vector<vector<int> > regroupement, vector<int> \&longueurTournee}
+				\Output{vector<vector<int> >}
+				\KwData{vector<vector<int> > subset, unsigned int c = 0,  int s = 0,  vector<int> tmp, int min = INT\_MAX }
+				\BlankLine
+				\While{c < regroupement.size()}{
+					$s = 0$\\
+					\eIf{regroupement[c][0] != (-10)}{
+						$ s += p -> distancier[0][regroupement[c][0]]$\\
+						\For{i allant de 0 à regroupement[c].size()}{
+							$s += p -> distancier[regroupement[c][i]][regroupement[c][i + 1]]$\\
+						}
+						$s += p -> distancier[regroupement[c].back()][0]$\\
+						\If{min > s}{
+							$min = s$\\
+							$tmp = regroupement[c]$\\
+						}
+					}
+					{
+						$subset.push\_back(tmp);$\\
+						$longueurTournee.push\_back(min);$\\
+					        	$tmp.clear();$\\
+				    		$min = INT\_MAX;$\\
+					}
+					$++c$\\					
+				}
+				
+				$return subset$ \\
+			\end{algorithm}\DecMargin{1em}
 			
 	\section{Structures de données}		
 					
 			\vspace{0.5cm}
+
+				Nous avons repris la structure de données fournie dans le squelette mais l'avons passés en c++ car nous sommes plus à l'aise. Nous avons donc une structure de données qui contient un vecteur de lieux dans lequel seront donc tous nos lieux. Un entier capaciteDrone qui va varier suivant les jeux de données sur lequel nous travaillons. Le vecteur capacité nous permet de savoir combien d'eau stock chaque lieu, le vecteur aura donc en position i la quantité d'eau du lieu i. Notre vecteur de vecteur distancier contient la matrice qui nous est donné en paramètre, c'est à dire la distance pour aller du point i au point j.
 		
 		
-		
-			
 	\section{Analyse des résultats}
 	
 		\vspace{0.5cm}		
+
+				WHALA ON EST DANS LE KK
 			
 			
 	\section{Améliorations}
 	
 		\vspace{0.5cm}		
+
+				
 			
 			
 			
 	\section{Conclusion}
 	
 		\vspace{0.5cm}
+
+				Nous avons donc 
 										
 \end{document}
