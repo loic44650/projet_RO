@@ -131,7 +131,7 @@ vector<vector<int>> indiceVecteurOccu(vector<vector<int>> tournee, donnees *p)
 {
     vector<vector<int>> occu;
 
-    occu.resize(p -> lieu.size() + 1);
+    occu.resize(p -> lieu.size());
 
     for (unsigned int i = 1; i < tournee.size(); ++i)
         for (unsigned int j = 0; j < tournee[i].size(); ++j)

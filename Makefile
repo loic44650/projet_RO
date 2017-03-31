@@ -3,4 +3,4 @@ all:
 	g++ -std=c++11 main.o -lglpk -lm -o main.exe
 
 clean:
-	rm -rf *.o *.exe
+	rm -rf *.o *.exe *.lp

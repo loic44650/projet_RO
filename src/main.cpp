@@ -125,13 +125,6 @@ int main(int argc, char *argv[])
     resolutionGLPK(tournees, longueurTournee, occu, &p);
 
 
-
-
-    /* ... */
-
-
-
-
     /* Problème résolu, arrêt du chrono */
     
     crono_stop();
