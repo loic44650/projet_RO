@@ -1,7 +1,7 @@
 # projet_RO
 
 
-Compilation :
+# Compilation :
 ________________________
 
 
@@ -14,7 +14,7 @@ make
 
 
 
-Exécution :
+# Exécution :
 ________________________
 
 
