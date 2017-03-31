@@ -34,7 +34,7 @@ void lecture_data(char *file, donnees *p)
         
         /* Lecture des demandes des clients */
         
-        for(int i = 1; i < nblieux; ++i)
+        for (int i = 1; i < nblieux; ++i)
         {
             fichier >> val;
             p -> capacite.push_back(val);
@@ -47,9 +47,9 @@ void lecture_data(char *file, donnees *p)
         for (int i = 0; i < nblieux; ++i)
             p -> distancier[i].resize(nblieux);
         
-        for(int i = 0; i < nblieux; ++i)
+        for (int i = 0; i < nblieux; ++i)
         {    
-            for(int j = 0; j < nblieux; ++j)
+            for (int j = 0; j < nblieux; ++j)
             {
                 fichier >> val;
                 p -> distancier[i][j] = val;

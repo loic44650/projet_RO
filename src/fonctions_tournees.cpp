@@ -70,7 +70,7 @@ vector<vector<int>> ensembleDesPermutationsPossibles(vector<vector<int>> regroup
     {
         do {
             subset.push_back(regroupement[i]);
-        } while(next_permutation(regroupement[i].begin(),regroupement[i].end()));
+        } while (next_permutation(regroupement[i].begin(),regroupement[i].end()));
 
         vector<int> v; v.push_back(-10);
         subset.push_back(v);
